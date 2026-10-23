@@ -1,0 +1,13 @@
+#: locale=pt
+
+## Media
+
+### Title
+panorama_6640CAC4_6A2C_28B3_41B8_1B6E18457029.label = PANO0001 Panorama
+
+## Tour
+
+### Description
+
+### Title
+tour.name = EQUATORIAL - NOME DOS LOCAIS 
