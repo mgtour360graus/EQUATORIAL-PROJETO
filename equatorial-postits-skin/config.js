@@ -3,7 +3,7 @@
 
   window.EquatorialPostitsConfig = Object.assign(
     {
-      version: "1.0.0",
+      version: "1.1.0",
       tourId: "equatorial-vista-aerea",
       storageKey: "mg360:equatorial-postits:v1",
       viewerSelectors: ["#viewer", "#MainViewer", "[data-tdv-viewer]"],

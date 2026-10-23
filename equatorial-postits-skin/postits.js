@@ -293,12 +293,17 @@
     var note = state.notes.find(function (item) {
       return item.id === state.editingId;
     });
-    if (!note) return;
+    if (note) deleteNote(note);
+  }
+
+  function deleteNote(note) {
+    if (!note || !config.permissions.delete) return;
     if (!window.confirm('Excluir a identificação "' + note.title + '"?')) return;
     state.notes = state.notes.filter(function (item) {
-      return item.id !== state.editingId;
+      return item.id !== note.id;
     });
-    closeEditor();
+    if (state.editingId === note.id) closeEditor();
+    if (state.detailsId === note.id) closeDetails();
     saveNotes("Identificação excluída.");
   }
 
@@ -501,6 +506,8 @@
 
     filtered.forEach(function (note) {
       var color = colorById(note.color);
+      var row = document.createElement("div");
+      row.className = "eqp-list-row";
       var item = document.createElement("button");
       item.type = "button";
       item.className = "eqp-list-item";
@@ -529,7 +536,51 @@
         }
         setPanel(false);
       });
-      el.list.appendChild(item);
+      var actions = document.createElement("div");
+      actions.className = "eqp-list-actions-inline";
+
+      if (config.permissions.edit) {
+        var moveButton = document.createElement("button");
+        moveButton.type = "button";
+        moveButton.className = "eqp-list-action";
+        moveButton.textContent = "Mover";
+        moveButton.setAttribute("aria-label", "Mover " + note.title);
+        moveButton.addEventListener("click", function () {
+          if (!state.adapter.openNote(note)) {
+            toast("Não foi possível abrir esta panorâmica ainda.");
+            return;
+          }
+          setEditMode(true);
+          setPanel(false);
+          toast("Arraste a etiqueta para a nova posição e solte para salvar.");
+        });
+
+        var editButton = document.createElement("button");
+        editButton.type = "button";
+        editButton.className = "eqp-list-action";
+        editButton.textContent = "Editar";
+        editButton.setAttribute("aria-label", "Editar " + note.title);
+        editButton.addEventListener("click", function () {
+          setPanel(false);
+          openEditor(note);
+        });
+        actions.append(moveButton, editButton);
+      }
+
+      if (config.permissions.delete) {
+        var deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.className = "eqp-list-action eqp-list-action--danger";
+        deleteButton.textContent = "Excluir";
+        deleteButton.setAttribute("aria-label", "Excluir " + note.title);
+        deleteButton.addEventListener("click", function () {
+          deleteNote(note);
+        });
+        actions.appendChild(deleteButton);
+      }
+
+      row.append(item, actions);
+      el.list.appendChild(row);
     });
   }
 

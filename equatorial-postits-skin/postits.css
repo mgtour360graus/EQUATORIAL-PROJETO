@@ -443,9 +443,21 @@
   cursor: pointer;
 }
 
-.eqp-list-item:hover {
+.eqp-list-row {
+  margin-bottom: 9px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  transition: background 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.eqp-list-row:hover {
+  border-color: var(--eqp-line);
   background: #fff;
   box-shadow: 0 7px 22px rgba(20, 52, 89, 0.08);
+}
+
+.eqp-list-item:hover {
+  background: rgba(31, 93, 168, 0.035);
 }
 
 .eqp-list-item[data-current="false"] {
@@ -484,6 +496,40 @@
 .eqp-list-arrow {
   color: var(--eqp-blue);
   font-size: 18px;
+}
+
+.eqp-list-actions-inline {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 0 11px 10px;
+}
+
+.eqp-list-action {
+  min-height: 34px;
+  border: 1px solid var(--eqp-line);
+  border-radius: 9px;
+  padding: 0 11px;
+  background: #fff;
+  color: var(--eqp-blue-dark);
+  font-size: 11px;
+  font-weight: 760;
+  cursor: pointer;
+}
+
+.eqp-list-action:hover {
+  border-color: rgba(31, 93, 168, 0.32);
+  background: #f3f7fc;
+}
+
+.eqp-list-action--danger {
+  border-color: rgba(176, 38, 38, 0.22);
+  color: #a22121;
+}
+
+.eqp-list-action--danger:hover {
+  border-color: rgba(176, 38, 38, 0.42);
+  background: #fff3f3;
 }
 
 .eqp-panel-footer {
